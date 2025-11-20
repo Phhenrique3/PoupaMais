@@ -1,0 +1,41 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "dev",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "start:dev"
+      ],
+      "outputCapture": "std",
+      "runtimeExecutable": "npm",
+      "type": "node",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "serverReadyAction": {
+        "action": "debugWithChrome",
+        "killOnServerStop": true,
+        "pattern": ".*up on port.*",
+        "uriFormat": "http://localhost:6100",
+        "webRoot": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "dev:backend",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run start:dev",
+      "outputCapture": "std",
+    },
+    {
+      "name": "dev:frontend",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:6100",
+      "outputCapture": "std",
+    }
+  ],
+  "compounds": []
+}
