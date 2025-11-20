@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 // exemplo de rota /api
 app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello Pedro e Ddua! Backend está on 🔥' });
+  res.json({ message: 'Hello Pedro e Ddua! Backend está oon 🔥' });
 });
 
 const PORT = 3001;
