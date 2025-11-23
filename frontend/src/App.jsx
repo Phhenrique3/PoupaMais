@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>Poupa+💰</h1>
+      <h1>Poupa+</h1>
     </>
   );
 }
