@@ -1,9 +1,10 @@
-import "./App.css";
+import "./css/App.css";
 
 function App() {
   return (
     <>
-      <h1>Poupa+</h1>
+      <h1>POUPA+ </h1>
+      
     </>
   );
 }
