@@ -10,10 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "poupamais": "file:..",
-=======
->>>>>>> 85ea8496edbd8bd000ad49d3f6e0d805aa48bde1
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

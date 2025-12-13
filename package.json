@@ -1,12 +1,12 @@
 {
   "name": "poupamais",
   "version": "1.0.0",
-  "main": "backend/src/index.js",
+  "main": "backend/api/src/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "nodemon backend/src/index.js",
+    "dev:backend": "nodemon backend/api/src/index.js",
     "dev:frontend": "npm run dev --prefix frontend",
-    "start": "node backend/src/index.js"
+    "start": "node backend/api/src/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
