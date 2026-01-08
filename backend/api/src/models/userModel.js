@@ -21,6 +21,6 @@ module.exports = {
    */
   findByEmail(email) {
     // Procura no array de usuários usando o método find
-    return users.find((u) => u.email === email);
+    return users.find((client) => client.email === email);
   },
 };
