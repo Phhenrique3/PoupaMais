@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { LoginDTO, RegisterDTO } from "../DTOs/authDtos.ts";
-import { AuthService } from "../services/authService.ts";
+import { LoginDTO, RegisterDTO } from "../DTOs/authDtos";
+import { AuthService } from "../services/authService";
 
 export const AuthController = {
   async register(req: Request, res: Response) {
-    const { nome, email, password } = req.body as Partial<RegisterDTO>;
+    const { name, email, password } = req.body as Partial<RegisterDTO>;
     
-    if (!nome || !email || !password) {
+    if (!name || !email || !password) {
       return res.status(400).json({ message: "name, email, e password são obrigatórias " });
     }
     try {
-      const user = await AuthService.register({ nome, email, password });
+      const user = await AuthService.register({ name, email, password });
       return res.status(201).json(user)
     } catch (err:any) {
       return res.status(400).json({message: err.message ?? "Error"})

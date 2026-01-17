@@ -1,12 +1,14 @@
 {
   "name": "poupamais",
   "version": "1.0.0",
-  "main": "apps/backend/src/index.js",
+  "main": "apps/backend/src/app.ts",
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:backend": "nodemon backend/src/index.js",
+    "dev:backend": "ts-node-dev --respawn --transpile-only --project apps/backend/tsconfig.json apps/backend/src/app.ts",
     "dev:frontend": "npm run dev --prefix web/frontend",
-    "start": "node backend/src/index.js"
+    "build:backend": "tsc -p apps/backend/tsconfig.json",
+    "start:backend": "node apps/backend/dist/app.js",
+    "start": "npm run start:backend"
   },
   "dependencies": {
     "@prisma/client": "^6.19.1",
@@ -19,13 +21,17 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",
     "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.0.9",
     "autoprefixer": "^10.4.22",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.11",
     "postcss": "^8.5.6",
     "prisma": "^6.19.1",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
   }
 }

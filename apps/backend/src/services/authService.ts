@@ -21,7 +21,7 @@ export const AuthService = {
     const password = await bcrypt.hash(dto.password, 10)
     
     const user = await UserModel.create({
-      name: dto.nome.trim(),
+      name: dto.name.trim(),
       email,
       password,
     });
