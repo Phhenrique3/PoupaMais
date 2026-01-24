@@ -1,4 +1,6 @@
 import { useState } from "react";
+import logoPoupa from "../../assets/logoPoupa+.png";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,14 +17,16 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <div className="flex justify-center mb-6">
-          <img src="/logoPoupa+.png" alt="Logo Poupa+" className="h-16" />
+          <img src={logoPoupa} alt="Logo Poupa+" className="h-50" />
         </div>
         <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
           Entrar na sua conta
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">E-mail</label>
+            <label className="block text-sm font-medium text-gray-700">
+              E-mail
+            </label>
             <input
               type="email"
               required
@@ -34,7 +38,9 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Senha</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Senha
+            </label>
             <input
               type="password"
               required
@@ -53,7 +59,9 @@ export default function Login() {
               />
               <span className="ml-2 text-gray-600">Lembrar-me</span>
             </label>
-            <a href="#" className="text-sm text-indigo-600 hover:underline">Esqueceu a senha?</a>
+            <a href="#" className="text-sm text-indigo-600 hover:underline">
+              Esqueceu a senha?
+            </a>
           </div>
 
           <button
