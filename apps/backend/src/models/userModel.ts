@@ -1,5 +1,4 @@
-import { create } from "domain";
-import { prisma } from "../config/prisma"
+import { prisma } from "../config/prisma";
 
 export const UserModel = {
   findByEmail(email: string) {
@@ -7,10 +6,28 @@ export const UserModel = {
   },
 
   findById(id: string) {
-    return prisma.user.findUnique({where:{id}})
+    return prisma.user.findUnique({ where: { id } });
   },
   create(data: { name: string; email: string; password: string }) {
-    return prisma.user.create({data})
-    
+    return prisma.user.create({ data });
+  },
+
+  getAll(filters?: { name: string; email: string }) {
+    return prisma.user.findMany({
+      where: {
+        ...(filters?.name && {
+          name: {
+            contains: filters.name,
+            mode: "insensitive",
+          },
+        }),
+        ...(filters?.email && {
+          email: {
+            contains: filters.email,
+            mode: "insensitive",
+          },
+        }),
+      },
+    });
   },
 };
