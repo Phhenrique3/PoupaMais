@@ -29,5 +29,22 @@ export const AuthController = {
       return res.status(400).json({message:err.message ?? "Error"})
       
     }
+  },
+
+  async getAll(req: Request, res: Response) {
+    const { name, email } = req.query
+    
+    try {
+      const users = await AuthService.getAllUsers({
+        name: name as string | undefined,
+        email: email as string | undefined,
+      })
+      return res.status(200).json(users)
+    } catch (err: any) {
+      return res.status(400).json({
+        message:err.mesasge ?? "Erro ao listar usuários"
+      })
+    }
+
   }
 }

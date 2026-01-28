@@ -12,7 +12,7 @@ export const UserModel = {
     return prisma.user.create({ data });
   },
 
-  getAll(filters?: { name: string; email: string }) {
+  getAll(filters?: { name?: string; email?: string }) {
     return prisma.user.findMany({
       where: {
         ...(filters?.name && {
@@ -28,6 +28,12 @@ export const UserModel = {
           },
         }),
       },
+    });
+  },
+
+  delete(id: string) {
+    return prisma.user.delete({
+      where: { id },
     });
   },
 };
