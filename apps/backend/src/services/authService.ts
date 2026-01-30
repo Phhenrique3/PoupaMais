@@ -2,7 +2,10 @@ import bcrypt from "bcrypt";
 import jwt, { SignOptions } from "jsonwebtoken";
 
 import { AuthResponseDTO, LoginDTO, RegisterDTO } from "../DTOs/authDtos";
+import { updateUserDto } from "../DTOs/updateAuth";
 import { UserModel } from "../models/userModel";
+import { data } from "react-router-dom";
+import { emit } from "node:cluster";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
@@ -65,4 +68,39 @@ export const AuthService = {
       return({mesasge: "Usuário deletado com sucesso"})
     
   },
+
+  async updateUser(UserId: string, dto: updateUserDto) {
+    const user = await UserModel.findById(UserId);
+    if (!user) throw new Error("Usuário não encontrado")
+    
+    const dataToUpdate: any = {}
+    
+    if (dto.name) {
+      dataToUpdate.name = dto.name.trim()
+    }
+
+    if (dto.email) {
+    const email = dto.email.trim().toLowerCase();
+
+    const emailExists = await UserModel.findByEmail(email);
+    if (emailExists && emailExists.id !== UserId) {
+      throw new Error("Email já está em uso");
+    }
+
+    dataToUpdate.email = email;
+    }
+    
+    if (dto.password) {
+      dataToUpdate.password = await bcrypt.hash(dto.password, 10)
+    }
+    const updatedUser = await UserModel.update(UserId, dataToUpdate);
+    
+    return {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+    }
+
+  }
+
 };

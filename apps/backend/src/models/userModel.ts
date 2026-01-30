@@ -31,6 +31,14 @@ export const UserModel = {
     });
   },
 
+  
+  update(id: string, data: Partial<{ name: string; email: string; password: string }>) {
+    return prisma.user.update({
+      where: { id },
+      data,
+    })
+  },
+
   delete(id: string) {
     return prisma.user.delete({
       where: { id },

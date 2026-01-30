@@ -5,7 +5,8 @@ import { AuthService } from "../services/authService";
 export const authRoutes = Router();
 authRoutes.post("/register", AuthController.register);
 authRoutes.post("/login", AuthController.login);
-authRoutes.get("/user" ,AuthController.getAll)
+authRoutes.get("/user", AuthController.getAll);
+authRoutes.patch("/users/:id", requireAuth, AuthController.update);
 authRoutes.get("/me", requireAuth, async (req: AuthRequest, res) => {
  try {
  const me = await AuthService.me(req.UserId!);
