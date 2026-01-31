@@ -3,3 +3,5 @@
 {"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T02:56:35.773Z"}
 {"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T03:03:45.530Z"}
 {"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T03:04:24.982Z"}
+{"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T03:13:14.903Z"}
+{"level":"error","message":"Teste de erro","timestamp":"2026-01-31T03:13:14.905Z"}

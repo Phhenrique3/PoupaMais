@@ -29,3 +29,4 @@ app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
 logger.info("servidor inicializando")
+logger.error("Teste de erro");
