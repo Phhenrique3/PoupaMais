@@ -5,3 +5,11 @@
 {"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T03:04:24.982Z"}
 {"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T03:13:14.903Z"}
 {"level":"error","message":"Teste de erro","timestamp":"2026-01-31T03:13:14.905Z"}
+{"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T23:32:45.838Z"}
+{"level":"error","message":"Teste de erro","timestamp":"2026-01-31T23:32:45.839Z"}
+{"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T23:41:53.540Z"}
+{"level":"error","message":"Teste de erro","timestamp":"2026-01-31T23:41:53.542Z"}
+{"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T23:45:26.299Z"}
+{"level":"error","message":"Teste de erro","timestamp":"2026-01-31T23:45:26.301Z"}
+{"level":"info","message":"servidor inicializando","timestamp":"2026-01-31T23:46:29.933Z"}
+{"level":"error","message":"Teste de erro","timestamp":"2026-01-31T23:46:29.934Z"}

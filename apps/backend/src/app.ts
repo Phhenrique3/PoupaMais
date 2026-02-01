@@ -1,12 +1,9 @@
 // apps/backend/src/app.ts
-import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import express from "express";
 import { routes } from "./routes";
 import { authRoutes } from "./routes/authRoutes";
-import {logger} from "./config/logger"
-
-
 
 dotenv.config();
 
@@ -28,5 +25,3 @@ const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
 });
-logger.info("servidor inicializando")
-logger.error("Teste de erro");

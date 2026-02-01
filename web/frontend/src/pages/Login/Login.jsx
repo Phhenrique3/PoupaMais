@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import logoPoupa from "../../assets/logoPoupa+.png";
+import { Routes, Route } from "react-router-dom";
 
 
 export default function Login() {
@@ -59,8 +61,10 @@ export default function Login() {
               />
               <span className="ml-2 text-gray-600">Lembrar-me</span>
             </label>
-            <a href="#" className="text-sm text-indigo-600 hover:underline">
-              Esqueceu a senha?
+            <a
+              className="text-sm text-indigo-600 hover:underline"
+            >
+              Criar uma nova conta
             </a>
           </div>
 
