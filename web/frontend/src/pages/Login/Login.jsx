@@ -61,11 +61,11 @@ export default function Login() {
               />
               <span className="ml-2 text-gray-600">Lembrar-me</span>
             </label>
-            <a
-              className="text-sm text-indigo-600 hover:underline"
-            >
-              Criar uma nova conta
-            </a>
+            <div className="flex justify-between items-center text-sm">
+              <Link to="/Register" className="text-indigo-600 hover:underline">
+                Cadastrar
+              </Link>
+            </div>
           </div>
 
           <button
@@ -75,7 +75,6 @@ export default function Login() {
             Entrar
           </button>
         </form>
-        
       </div>
     </div>
   );
