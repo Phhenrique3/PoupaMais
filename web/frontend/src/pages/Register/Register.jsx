@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoPoupa from "../../assets/logoPoupa+.png";
 import Input from "../../components/Inputs";
+import { registerUser } from "../../services/authService";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -18,18 +21,24 @@ export default function Register() {
       ...prev,
       [name]: value,
     }));
-  }
+  } 
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const { name, email, password, confirmPassword } = form;
 
-    // 🔎 PARTE 1 — você deve melhorar essa validação
     if (!name || !email || !password || !confirmPassword) {
       alert("Preencha todos os campos");
       return;
     }
+      
+    if (name.length < 3 || email.length < 5) {
+      alert(`a qunatidade ${email} ou ${name} abaixo do minimo de caracteres `);
+    }
+      alert
+    
+
 
     if (password !== confirmPassword) {
       alert("As senhas não coincidem");
@@ -37,12 +46,12 @@ export default function Register() {
     }
 
     try {
-      // 🔎 PARTE 2 — aqui você deve integrar com sua API
-      console.log("Cadastro enviado:", { name, email, password });
+      await registerUser({ name, email, password });
+      alert("Cadastrado com sucesso");
 
-      // depois você pode redirecionar para login
+      navigate("/login");
     } catch (error) {
-      console.error("Erro no cadastro", error);
+      alert(error.message);
     }
   }
 
@@ -64,7 +73,6 @@ export default function Register() {
             value={form.name}
             onChange={handleChange}
             placeholder="Seu nome completo"
-            required
           />
 
           <Input
@@ -74,7 +82,7 @@ export default function Register() {
             value={form.email}
             onChange={handleChange}
             placeholder="seu@email.com"
-            required
+            minlength="5"
           />
 
           <Input
@@ -84,7 +92,6 @@ export default function Register() {
             value={form.password}
             onChange={handleChange}
             placeholder="••••••••"
-            required
           />
 
           <Input
@@ -94,7 +101,6 @@ export default function Register() {
             value={form.confirmPassword}
             onChange={handleChange}
             placeholder="••••••••"
-            required
           />
 
           <div className="flex justify-between items-center text-sm">
@@ -105,7 +111,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
             Criar Conta
           </button>

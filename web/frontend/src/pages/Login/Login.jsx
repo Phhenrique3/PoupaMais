@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoPoupa from "../../assets/logoPoupa+.png";
-import { Routes, Route } from "react-router-dom";
-
+import { loginUser } from "../../services/authService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Aqui você pode chamar a API de autenticação
-    console.log("login", { email, password });
-    // Exemplo: redirecionar após login bem-sucedido
+
+    if (!email || !password) {
+      alert("Precha todos os campos");
+      return;
+    }
+
+    try {
+      const result = await loginUser({ email, password });
+
+      localStorage.setItem("token", result.token);
+      navigate("/home");
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   return (
