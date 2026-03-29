@@ -12,7 +12,7 @@ export function requireAuth(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.cookies?.authorization;
 
   if (!authHeader) {
     return res.status(401).json({ message: "token ausente" });

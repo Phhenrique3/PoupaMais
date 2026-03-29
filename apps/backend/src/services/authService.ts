@@ -4,8 +4,6 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { AuthResponseDTO, LoginDTO, RegisterDTO } from "../DTOs/authDtos";
 import { updateUserDto } from "../DTOs/updateAuth";
 import { UserModel } from "../models/userModel";
-import { data } from "react-router-dom";
-import { emit } from "node:cluster";
 
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret";
 
