@@ -33,13 +33,6 @@ export default function Register() {
       return;
     }
       
-    if (name.length < 3 || email.length < 5) {
-      alert(`a qunatidade ${email} ou ${name} abaixo do minimo de caracteres `);
-    }
-      alert
-    
-
-
     if (password !== confirmPassword) {
       alert("As senhas não coincidem");
       return;

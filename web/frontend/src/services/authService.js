@@ -3,6 +3,7 @@ const API_URL = "http://localhost:3001/api";
 export async function registerUser(data) {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

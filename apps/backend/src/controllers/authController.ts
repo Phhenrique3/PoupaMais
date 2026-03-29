@@ -34,14 +34,23 @@ export const AuthController = {
 
     try {
       const result = await AuthService.login({ email, password });
-      return res.status(200).json(result);
+      const token = result.token
+
+      res.cookie("toke", token,{
+        httpOnly: true,
+          secure: false,
+          sameSite : "lax",
+          maxAge : 1000 * 60 * 24,
+      })
+      return res.status(200).json({
+        message: "login realizado com sucesso"
+      })
     } catch (err: any) {
       return res.status(400).json({
-        message: err.message ?? "Erro ao realizar login",
-      });
+        message: err.message ?? "erro ao realizar login"
+      })
     }
   },
-
   async getAll(req: Request, res: Response) {
     const { name, email } = req.query;
 

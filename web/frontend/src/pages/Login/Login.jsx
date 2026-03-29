@@ -18,8 +18,9 @@ export default function Login() {
 
     try {
       const result = await loginUser({ email, password });
-
+    
       localStorage.setItem("token", result.token);
+      localStorage.clear();
       navigate("/home");
     } catch (error) {
       alert(error.message);
