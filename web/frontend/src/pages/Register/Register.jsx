@@ -21,7 +21,7 @@ export default function Register() {
       ...prev,
       [name]: value,
     }));
-  } 
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -32,7 +32,7 @@ export default function Register() {
       alert("Preencha todos os campos");
       return;
     }
-      
+
     if (password !== confirmPassword) {
       alert("As senhas não coincidem");
       return;
