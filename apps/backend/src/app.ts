@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import express from "express";
 import { routes } from "./routes";
 import { authRoutes } from "./routes/authRoutes";
-
+import handleErrors from "./middlewares/Error/handleErrors";
+import { notFoundHandler } from "./middlewares/Error/notFoundHandler"
 dotenv.config();
 
 const app = express();
@@ -14,7 +15,9 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); 
+app.use(handleErrors);
+app.use(notFoundHandler.handle)
 
 // health check
 app.get("/", (req, res) => {
@@ -23,6 +26,7 @@ app.get("/", (req, res) => {
 
 // 🔑 AQUI você conecta TODAS as rotas do sistema
 app.use("/api", routes);
+
 
 const PORT = 3001;
 app.listen(PORT, () => {
