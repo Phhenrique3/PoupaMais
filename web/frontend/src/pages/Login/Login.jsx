@@ -1,82 +1,57 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoPoupa from "../../assets/logoPoupa+.png";
-import { Routes, Route } from "react-router-dom";
-
+import { api } from "../../services/api";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // Aqui você pode chamar a API de autenticação
-    console.log("login", { email, password });
-    // Exemplo: redirecionar após login bem-sucedido
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const { token } = await api("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      localStorage.setItem("poupamais.token", token);
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <div className="flex justify-center mb-6">
-          <img src={logoPoupa} alt="Logo Poupa+" className="h-50" />
+    <main className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+      <section className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
+        <div className="mb-6 flex justify-center">
+          <img src={logoPoupa} alt="Logo Poupa+" className="h-32" />
         </div>
-        <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
-          Entrar na sua conta
-        </h2>
+        <h1 className="mb-4 text-center text-2xl font-semibold text-gray-800">Entrar na sua conta</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              E-mail
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              placeholder="seu@email.com"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Senha
-            </label>
-            <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              placeholder="••••••••"
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <label className="flex items-center text-sm">
-              <input
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
-              />
-              <span className="ml-2 text-gray-600">Lembrar-me</span>
-            </label>
-            <a
-              className="text-sm text-indigo-600 hover:underline"
-            >
-              Criar uma nova conta
-            </a>
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Entrar
+          <label className="block text-sm font-medium text-gray-700">
+            E-mail
+            <input className="mt-1 block w-full rounded-md border border-gray-300 p-2" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+          </label>
+          <label className="block text-sm font-medium text-gray-700">
+            Senha
+            <input className="mt-1 block w-full rounded-md border border-gray-300 p-2" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+          </label>
+          {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
+          <button disabled={loading} className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white disabled:opacity-60">
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
-        
-      </div>
-    </div>
+        <p className="mt-5 text-center text-sm text-gray-600">Ainda não tem conta? <Link className="text-indigo-600 hover:underline" to="/cadastro">Criar conta</Link></p>
+      </section>
+    </main>
   );
 }

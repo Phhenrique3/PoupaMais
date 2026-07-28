@@ -1,25 +1,30 @@
 import { Request, Response } from "express";
 import { LoginDTO, RegisterDTO } from "../DTOs/authDtos";
 import { updateUserDto } from "../DTOs/updateAuth";
+import { AuthRequest } from "../middlewares/authMiddleware";
 import { AuthService } from "../services/authService";
+
+function errorMessage(error: unknown, fallback: string) {
+  return error instanceof Error ? error.message : fallback;
+}
 
 export const AuthController = {
   async register(req: Request, res: Response) {
     const { name, email, password } = req.body as Partial<RegisterDTO>;
 
     if (!name || !email || !password) {
-      return res
-        .status(400)
-        .json({ message: "name, email e password são obrigatórios" });
+      return res.status(400).json({ message: "Nome, e-mail e senha são obrigatórios" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "A senha deve ter ao menos 6 caracteres" });
     }
 
     try {
       const user = await AuthService.register({ name, email, password });
       return res.status(201).json(user);
-    } catch (err: any) {
-      return res.status(400).json({
-        message: err.message ?? "Erro ao registrar usuário",
-      });
+    } catch (err) {
+      return res.status(400).json({ message: errorMessage(err, "Erro ao registrar usuário") });
     }
   },
 
@@ -27,68 +32,42 @@ export const AuthController = {
     const { email, password } = req.body as Partial<LoginDTO>;
 
     if (!email || !password) {
-      return res
-        .status(401)
-        .json({ message: "email e password são obrigatórios" });
+      return res.status(400).json({ message: "E-mail e senha são obrigatórios" });
     }
 
     try {
       const result = await AuthService.login({ email, password });
       return res.status(200).json(result);
-    } catch (err: any) {
-      return res.status(400).json({
-        message: err.message ?? "Erro ao realizar login",
-      });
+    } catch (err) {
+      return res.status(401).json({ message: errorMessage(err, "Erro ao realizar login") });
     }
   },
 
-  async getAll(req: Request, res: Response) {
-    const { name, email } = req.query;
-
+  async me(req: AuthRequest, res: Response) {
     try {
-      const users = await AuthService.getAllUsers({
-        name: name as string | undefined,
-        email: email as string | undefined,
-      });
-
-      return res.status(200).json(users);
-    } catch (err: any) {
-      return res.status(400).json({
-        message: err.message ?? "Erro ao listar usuários",
-      });
+      const user = await AuthService.me(req.UserId!);
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(404).json({ message: errorMessage(err, "Usuário não encontrado") });
     }
   },
 
-  async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const userId = Array.isArray(id) ? id[0] : id;
-
+  async updateMe(req: AuthRequest, res: Response) {
     const { name, email, password } = req.body as updateUserDto;
 
-    if (!userId) {
-      return res.status(400).json({
-        message: "ID do usuário é obrigatório",
-      });
+    if (!name && !email && !password) {
+      return res.status(400).json({ message: "Informe ao menos um campo para atualizar" });
     }
 
-    if (!name && !email && !password) {
-      return res.status(400).json({
-        message: "Informe ao menos um campo para atualizar",
-      });
+    if (password && password.length < 6) {
+      return res.status(400).json({ message: "A senha deve ter ao menos 6 caracteres" });
     }
 
     try {
-      const updatedUser = await AuthService.updateUser(userId, {
-        name,
-        email,
-        password,
-      });
-
-      return res.status(200).json(updatedUser);
-    } catch (err: any) {
-      return res.status(400).json({
-        message: err.message ?? "Erro ao atualizar usuário",
-      });
+      const user = await AuthService.updateUser(req.UserId!, { name, email, password });
+      return res.status(200).json(user);
+    } catch (err) {
+      return res.status(400).json({ message: errorMessage(err, "Erro ao atualizar usuário") });
     }
   },
 };

@@ -7,33 +7,22 @@ export interface AuthRequest extends Request {
   UserId?: string;
 }
 
-export function requireAuth(
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) {
+export function requireAuth(req: AuthRequest, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
-
-  if (!authHeader) {
-    return res.status(401).json({ message: "token ausente" });
-  }
+  if (!authHeader) return res.status(401).json({ message: "Token ausente" });
 
   const [scheme, token] = authHeader.split(" ");
-
   if (scheme !== "Bearer" || !token) {
-    return res.status(401).json({ message: "token mal formatado" });
+    return res.status(401).json({ message: "Token mal formatado" });
   }
 
   try {
     const payload = jwt.verify(token, JWT_SECRET) as { sub?: string };
-
-    if (!payload.sub) {
-      return res.status(401).json({ message: "token inválido" });
-    }
+    if (!payload.sub) return res.status(401).json({ message: "Token inválido" });
 
     req.UserId = payload.sub;
     return next();
   } catch {
-    return res.status(401).json({ message: "token inválido" });
+    return res.status(401).json({ message: "Token inválido" });
   }
 }

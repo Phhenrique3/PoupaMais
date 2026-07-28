@@ -8,3 +8,7 @@ logs/
 
 # dependências
 node_modules/
+
+# build
+apps/backend/dist/
+web/frontend/dist/
