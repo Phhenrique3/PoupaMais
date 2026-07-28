@@ -23,8 +23,8 @@ export const AuthController = {
     try {
       const user = await AuthService.register({ name, email, password });
       return res.status(201).json(user);
-    } catch (err) {
-      return res.status(400).json({ message: errorMessage(err, "Erro ao registrar usuário") });
+    } catch (error) {
+      return res.status(400).json({ message: errorMessage(error, "Erro ao registrar usuário") });
     }
   },
 
@@ -38,8 +38,8 @@ export const AuthController = {
     try {
       const result = await AuthService.login({ email, password });
       return res.status(200).json(result);
-    } catch (err) {
-      return res.status(401).json({ message: errorMessage(err, "Erro ao realizar login") });
+    } catch (error) {
+      return res.status(401).json({ message: errorMessage(error, "Erro ao realizar login") });
     }
   },
 
@@ -47,8 +47,8 @@ export const AuthController = {
     try {
       const user = await AuthService.me(req.UserId!);
       return res.status(200).json(user);
-    } catch (err) {
-      return res.status(404).json({ message: errorMessage(err, "Usuário não encontrado") });
+    } catch (error) {
+      return res.status(404).json({ message: errorMessage(error, "Usuário não encontrado") });
     }
   },
 
@@ -66,8 +66,8 @@ export const AuthController = {
     try {
       const user = await AuthService.updateUser(req.UserId!, { name, email, password });
       return res.status(200).json(user);
-    } catch (err) {
-      return res.status(400).json({ message: errorMessage(err, "Erro ao atualizar usuário") });
+    } catch (error) {
+      return res.status(400).json({ message: errorMessage(error, "Erro ao atualizar usuário") });
     }
   },
 };

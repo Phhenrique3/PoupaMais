@@ -2,7 +2,12 @@ import { prisma } from "../config/prisma";
 
 export const UserModel = {
   findByEmail(email: string) {
-    return prisma.user.findUnique({ where: { email } });
+    try {
+      return prisma.user.findUnique({ where: { email } });
+    } catch (err) {
+      console.error("Erro ao buscar usuário por email", err);
+      throw new Error("Erro interno do servidor");
+    }
   },
 
   findById(id: string) {
@@ -31,12 +36,14 @@ export const UserModel = {
     });
   },
 
-  
-  update(id: string, data: Partial<{ name: string; email: string; password: string }>) {
+  update(
+    id: string,
+    data: Partial<{ name: string; email: string; password: string }>,
+  ) {
     return prisma.user.update({
       where: { id },
       data,
-    })
+    });
   },
 
   delete(id: string) {
